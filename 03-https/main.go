@@ -8,11 +8,11 @@ import (
 
 // openssl req -x509 -newkey rsa:4096 -nodes -keyout server.key -out server.crt -days 365 -subj '/CN=example.com'
 func main() {
-	http.ListenAndServeTLS(
+	log.Fatal(http.ListenAndServeTLS(
 		":8080",
 		"server.crt", "server.key",
 		http.HandlerFunc(handler),
-	)
+	))
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {

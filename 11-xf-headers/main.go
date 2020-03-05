@@ -73,6 +73,7 @@ func protoFromRequest(r *http.Request) string {
 }
 
 func remoteHostFromRequest(r *http.Request) string {
+	log.Println(r.RemoteAddr)
 	host, _, _ := net.SplitHostPort(r.RemoteAddr)
 	return host
 }

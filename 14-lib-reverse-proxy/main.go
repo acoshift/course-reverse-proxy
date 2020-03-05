@@ -58,6 +58,7 @@ func createReverseProxy() http.Handler {
 	return chain(
 		xfHeaders,
 		realIPHeader,
+		removeRemoteAddr,
 	)(rev)
 }
 
@@ -82,6 +83,14 @@ func xfHeaders(h http.Handler) http.Handler {
 func realIPHeader(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		r.Header.Set("X-Real-IP", realIPFromRequest(r))
+
+		h.ServeHTTP(w, r)
+	})
+}
+
+func removeRemoteAddr(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		r.RemoteAddr = ""
 
 		h.ServeHTTP(w, r)
 	})

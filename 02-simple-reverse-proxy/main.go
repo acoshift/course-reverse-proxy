@@ -15,6 +15,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	r.URL.Scheme = "http"
 	r.URL.Host = "93.184.216.34"
 
+	r.Host = "example.com"
+
 	// forward request to upstream
 	resp, err := http.DefaultTransport.RoundTrip(r)
 	if err != nil {
